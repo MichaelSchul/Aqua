@@ -8,7 +8,7 @@
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap">
 <style>
-/* Layout: a fixed 1920×1024 stage built 1:1 from Figma page 2429:24049 (frames 01–15), scaled to fit the window. Single light theme (matches the product file). */
+/* Layout: responsive. The stage fills the window with the navigation rail on the left edge; at 1920×1024 it is 1:1 with Figma page 2429:24049 (frames 00–15). Single light theme (matches the product file). */
 :root {
   color-scheme: light;
   --page: #fff9fc;
@@ -35,10 +35,10 @@ img { display: block; max-width: none; }
 p { margin: 0; }
 
 .viewport { position: fixed; inset: 0; overflow: hidden; }
-.stage { position: absolute; left: 50%; top: 50%; width: 1920px; height: 1024px; transform-origin: center center; background: var(--page); display: flex; align-items: flex-start; justify-content: space-between; }
+.stage { position: absolute; inset: 0; background: var(--page); display: flex; align-items: flex-start; justify-content: space-between; }
 
 /* Navigation bar (2372:14288) */
-.nav { box-sizing: border-box; width: 58px; height: 1024px; flex: none; background: var(--rail); border: 1px solid var(--rail); padding: 8px; display: flex; flex-direction: column; overflow: clip; }
+.nav { box-sizing: border-box; width: 58px; height: 100%; flex: none; background: var(--rail); border: 1px solid var(--rail); padding: 8px; display: flex; flex-direction: column; overflow: clip; }
 .sidebar { flex: 1 0 0; display: flex; flex-direction: column; align-items: center; justify-content: space-between; }
 .menu { display: flex; flex-direction: column; gap: 4px; align-items: center; justify-content: center; width: 40px; }
 .menu.bottom { justify-content: flex-start; }
@@ -59,7 +59,7 @@ p { margin: 0; }
 
 /* Main column (2372:14289) */
 .main { flex: 1 0 0; min-width: 1px; height: 100%; display: flex; flex-direction: column; align-items: center; }
-.header { box-sizing: border-box; width: 1862px; height: 64px; flex: none; padding: 16px; display: flex; align-items: center; justify-content: space-between; }
+.header { box-sizing: border-box; width: 100%; height: 64px; flex: none; padding: 16px; display: flex; align-items: center; justify-content: space-between; }
 .h-left, .h-right { flex: 1 0 0; min-width: 1px; display: flex; gap: 8px; align-items: center; }
 .h-right { justify-content: flex-end; }
 .h-center { display: flex; gap: 8px; align-items: center; flex: none; }
@@ -74,13 +74,13 @@ p { margin: 0; }
 .orb img { position: absolute; height: 5600%; width: 8959.99%; left: -1095%; top: -745%; }
 
 .body { flex: 1 0 0; min-height: 1px; width: 100%; display: flex; flex-direction: column; gap: 40px; align-items: center; justify-content: flex-end; padding-bottom: 12px; box-sizing: border-box; }
-.chat { box-sizing: border-box; flex: 1 0 0; min-height: 1px; width: 960px; padding: 16px; display: flex; flex-direction: column; gap: 40px; align-items: flex-end; overflow-y: auto; scrollbar-width: none; overflow-anchor: none; }
+.chat { box-sizing: border-box; flex: 1 0 0; min-height: 1px; width: 960px; max-width: 100%; padding: 16px; display: flex; flex-direction: column; gap: 40px; align-items: flex-end; overflow-y: auto; scrollbar-width: none; overflow-anchor: none; }
 .chat::-webkit-scrollbar { display: none; }
 .chat > * { flex: none; }
 .full { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
 .user-wrap { width: 100%; display: flex; flex-direction: column; align-items: flex-end; }
-.user { box-sizing: border-box; width: 649px; background: var(--bubble); border-radius: 8px; padding: 16px 24px; font-size: 14px; line-height: 21px; word-break: break-word; color: var(--body); }
-.msg { width: 640px; font-size: 14px; line-height: 21px; color: var(--body); }
+.user { box-sizing: border-box; width: 649px; max-width: 100%; background: var(--bubble); border-radius: 8px; padding: 16px 24px; font-size: 14px; line-height: 21px; word-break: break-word; color: var(--body); }
+.msg { width: 640px; max-width: 100%; font-size: 14px; line-height: 21px; color: var(--body); }
 
 .text-sm { font-size: 14px; line-height: 21px; color: var(--placeholder); }
 .xs { font-size: 12px; line-height: normal; color: var(--placeholder); white-space: nowrap; }
@@ -94,9 +94,9 @@ p { margin: 0; }
 .nowrap { white-space: nowrap; flex: none; }
 
 
-.rows { width: 928px; display: flex; flex-direction: column; align-items: flex-start; }
+.rows { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
 .row { box-sizing: border-box; width: 100%; padding: 8px; display: flex; flex-direction: column; align-items: flex-start; justify-content: center; }
-.row-in { width: 640px; display: flex; gap: 8px; align-items: center; border-radius: 8px; }
+.row-in { width: 640px; max-width: 100%; display: flex; gap: 8px; align-items: center; border-radius: 8px; }
 .card .row.reason { border-radius: 8px; }
 .card .row.reason:hover, .card .row.reason.force-hover, .card .row.reason.open { background: var(--row-active); }
 .row.open { gap: 8px; }
@@ -115,8 +115,8 @@ p { margin: 0; }
 .card .rows { width: 100%; }
 .xs-m { font-weight: 500; font-size: 12px; line-height: 14.4px; color: var(--placeholder); white-space: nowrap; }
 
-.aqua-line { width: 928px; display: flex; flex-direction: column; align-items: flex-start; }
-.aqua-line .in { width: 640px; display: flex; gap: 8px; align-items: center; border-radius: 8px; }
+.aqua-line { width: 100%; display: flex; flex-direction: column; align-items: flex-start; }
+.aqua-line .in { width: 640px; max-width: 100%; display: flex; gap: 8px; align-items: center; border-radius: 8px; }
 .working { background: linear-gradient(90deg, var(--placeholder) 0%, var(--placeholder) 35%, #c3cbe0 50%, var(--placeholder) 65%, var(--placeholder) 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.6s linear infinite; }
 @keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0% 0; } }
 /* Loader at the end of the chat: "steady water" — a half-full circle with a wave flowing across a fixed level (replaces the Aqua orb there; not in Figma).
@@ -128,7 +128,7 @@ p { margin: 0; }
 @keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
 /* Welcome screen (frame 00, 2573:14304): the starting point; the blue send button starts the flow */
-.home { display: none; position: relative; box-sizing: border-box; flex: 1 0 0; min-height: 1px; width: 100%; margin-top: 40px; padding-top: 164px; flex-direction: column; gap: 40px; align-items: center; }
+.home { display: none; position: relative; box-sizing: border-box; flex: 1 0 0; min-height: 1px; width: 100%; margin-top: 40px; padding: clamp(24px, calc(100vh - 860px), 164px) 16px 12px; flex-direction: column; gap: 40px; align-items: center; overflow-y: auto; scrollbar-width: none; }
 .home > * { flex: none; }
 .is-welcome .home { display: flex; }
 .is-welcome .body, .is-welcome #newChat { display: none; }
@@ -140,7 +140,7 @@ p { margin: 0; }
 .home-send { box-sizing: border-box; padding: 8px; border-radius: 8px; background: var(--primary); display: flex; align-items: center; justify-content: center; }
 .home-send .im { padding: 1px; display: flex; overflow: clip; }
 .home-send .im img { width: 18px; height: 18px; }
-.caps { width: 960px; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
+.caps { width: 960px; max-width: 100%; display: flex; flex-direction: column; gap: 16px; align-items: flex-start; }
 .caps-head { width: 100%; display: flex; align-items: center; justify-content: space-between; color: #404d68; white-space: nowrap; }
 .caps-head .h5 { font-weight: 600; font-size: 16px; line-height: 24px; }
 .caps-head .all { font-size: 14px; line-height: 21px; }
@@ -149,11 +149,11 @@ p { margin: 0; }
 .cap .k, .cap .d { font-size: 12px; line-height: 18px; color: var(--placeholder); }
 .cap .k { white-space: nowrap; }
 .cap .t { font-weight: 700; font-size: 14px; line-height: 21px; color: var(--body); }
-.home-note { position: absolute; top: 893px; left: 50%; transform: translateX(-50%); width: 630px; text-align: center; font-size: 10px; line-height: normal; color: #777a83; }
+.home-note { margin-top: auto; width: 630px; max-width: 100%; text-align: center; font-size: 10px; line-height: normal; color: #777a83; }
 
 /* Composer (2372:14352) */
 .dock { display: flex; flex-direction: column; gap: 8px; align-items: center; flex: none; }
-.composer { box-sizing: border-box; width: 960px; height: 164px; background: var(--white); border: 1px solid var(--divider); border-radius: 24px; box-shadow: var(--dialog); padding: 15px; display: flex; flex-direction: column; overflow: clip; margin: 0; }
+.composer { box-sizing: border-box; width: 960px; max-width: 100%; height: 164px; background: var(--white); border: 1px solid var(--divider); border-radius: 24px; box-shadow: var(--dialog); padding: 15px; display: flex; flex-direction: column; overflow: clip; margin: 0; }
 .c-inner { flex: 1 0 0; min-height: 1px; display: flex; flex-direction: column; justify-content: space-between; }
 .c-text { flex: 1 0 0; min-height: 1px; display: flex; }
 .c-text textarea { flex: 1; border: 0; padding: 0; margin: 0; resize: none; background: transparent; outline: none; font-family: var(--font); font-size: 14px; line-height: 21px; color: var(--body); }
@@ -168,18 +168,31 @@ p { margin: 0; }
 .send { box-sizing: border-box; height: 36px; padding: 8px; border-radius: 8px; background: var(--primary); display: flex; align-items: center; justify-content: center; }
 .send .ico { position: relative; width: 16px; height: 16px; overflow: clip; }
 .send .ico img { position: absolute; inset: 6.25%; width: 87.5%; height: 87.5%; }
-.disclaimer { width: 630px; text-align: center; font-size: 10px; line-height: normal; color: var(--placeholder); }
+.disclaimer { width: 630px; max-width: 100%; text-align: center; font-size: 10px; line-height: normal; color: var(--placeholder); }
 
-/* Prototype controls (not part of the design; hide with ?ui=0) */
-.proto { position: absolute; right: 24px; bottom: 24px; z-index: 5; background: var(--panel); color: var(--panel-ink); border-radius: 12px; padding: 10px; display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 16px; box-shadow: 0 8px 28px rgba(0,0,0,.25); }
+/* Prototype controls, in the top bar next to the concept tabs (not part of the design; hide with ?ui=0) */
+.proto { position: absolute; right: 12px; top: 0; height: 44px; display: flex; align-items: center; gap: 8px; font-size: 12px; line-height: 16px; }
 .proto[hidden] { display: none; }
 /* Concept tabs: a prototype bar above the stage */
 .tabs { position: fixed; inset: 0 0 auto 0; height: 44px; z-index: 6; background: var(--panel); color: var(--panel-ink); display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 13px; line-height: 16px; }
 .tabs[hidden] { display: none; }
-.tabs button { padding: 6px 14px; border-radius: 8px; }
-.tabs button:hover { background: rgba(255,255,255,.12); }
+.tabs > button { padding: 6px 14px; border-radius: 8px; }
+.tabs > button:hover { background: rgba(255,255,255,.12); }
 .tabs button[aria-selected="true"] { background: var(--white); color: var(--panel); }
 body.has-tabs .viewport { top: 44px; }
+/* Narrow windows: the chat column shrinks, long labels wrap and the capability cards stack two by two */
+.dock { max-width: 100%; padding-inline: 16px; box-sizing: border-box; }
+@media (max-width: 1100px) {
+  .nowrap { white-space: normal; flex: 0 1 auto; min-width: 0; }
+  .card-toggle .nowrap, .xs-m { white-space: nowrap; flex: none; }
+  .caps-head { flex-wrap: wrap; gap: 4px 16px; white-space: normal; }
+  .cards { flex-wrap: wrap; }
+  .cap { flex: 1 1 calc(50% - 4px); }
+  .h-title { font-size: 16px; }
+  .btn .t { display: none; }
+  .home-text br { display: none; }
+}
+@media (max-width: 700px) { .proto .tag, #replay { display: none; } .tabs { justify-content: flex-start; padding-left: 8px; } }
 /* Concept 2: the group header is a plain line aligned with the message text, with the time 16px after the arrow;
    only the expanded list below it gets a background and border */
 .concept-2 .card, .concept-2 .card:hover { background: transparent; padding: 0; }
@@ -201,6 +214,13 @@ body.has-tabs .viewport { top: 44px; }
 <div class="tabs" id="tabs" role="tablist" aria-label="Concept">
   <button role="tab" data-concept="1">Concept 1</button>
   <button role="tab" data-concept="2">Concept 2</button>
+  <div class="proto" id="proto" role="group" aria-label="Prototype controls">
+    <span class="tag">Prototype</span>
+    <button id="prev" aria-label="Previous frame">‹</button>
+    <span class="count" id="count"></span>
+    <button id="next" aria-label="Next frame">›</button>
+    <button id="replay">Replay</button>
+  </div>
 </div>
 <div class="viewport">
 <div class="stage" id="stage">
@@ -302,13 +322,6 @@ body.has-tabs .viewport { top: 44px; }
     </div>
   </div>
 
-  <div class="proto" id="proto" role="group" aria-label="Prototype controls">
-    <span class="tag">Prototype</span>
-    <button id="prev" aria-label="Previous frame">‹</button>
-    <span class="count" id="count"></span>
-    <button id="next" aria-label="Next frame">›</button>
-    <button id="replay">Replay</button>
-  </div>
 </div>
 </div>
 
@@ -481,10 +494,7 @@ document.getElementById('composer').addEventListener('submit', e => { e.preventD
 prompt.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) { e.preventDefault(); document.getElementById('composer').requestSubmit(); } });
 addEventListener('keydown', e => { if (e.target === prompt) return; if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
 
-// Scale the 1920×1024 stage to fit the window
 const stage = document.getElementById('stage');
-function fit() { const s = Math.min(innerWidth / 1920, (innerHeight - (document.body.classList.contains('has-tabs') ? 44 : 0)) / 1024); stage.style.transform = `translate(-50%, -50%) scale(${s})`; }
-addEventListener('resize', fit);
 document.fonts.ready.then(() => { chat.scrollTop = chat.scrollHeight; });   // re-anchor once Poppins has replaced the fallback
 
 // ?frame=N opens a specific step statically; ?ui=0 hides the prototype controls
@@ -493,13 +503,12 @@ const q = new URLSearchParams(location.search);
 const tabs = document.getElementById('tabs');
 function setConcept(c) {
   document.body.classList.toggle('concept-2', c === 2);
-  tabs.querySelectorAll('button').forEach(b => b.setAttribute('aria-selected', +b.dataset.concept === c));
+  tabs.querySelectorAll('[data-concept]').forEach(b => b.setAttribute('aria-selected', +b.dataset.concept === c));
 }
 tabs.addEventListener('click', e => { const b = e.target.closest('[data-concept]'); if (b) setConcept(+b.dataset.concept); });   // switching keeps the current step
 if (q.get('ui') === '0') document.getElementById('proto').hidden = tabs.hidden = true;
 else document.body.classList.add('has-tabs');
 setConcept(q.get('concept') === '2' ? 2 : 1);
-fit();
 goto(q.has('frame') ? +q.get('frame') : 0);   // opens on the welcome screen; the send button starts the stream
 </script>
 </body>
