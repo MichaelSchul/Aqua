@@ -119,11 +119,46 @@ p { margin: 0; }
 .aqua-line .in { width: 640px; max-width: 100%; display: flex; gap: 8px; align-items: center; border-radius: 8px; }
 .working { background: linear-gradient(90deg, var(--placeholder) 0%, var(--placeholder) 35%, #c3cbe0 50%, var(--placeholder) 65%, var(--placeholder) 100%); background-size: 300% 100%; -webkit-background-clip: text; background-clip: text; color: transparent; animation: shimmer 1.6s linear infinite; }
 @keyframes shimmer { from { background-position: 100% 0; } to { background-position: 0% 0; } }
-/* Loader at the end of the chat: "steady water" — a half-full circle with a wave flowing across a fixed level (replaces the Aqua orb there; not in Figma).
+/* Loader at the end of the chat: "steady water" — a half-full circle with a wave flowing across a fixed level; in concept 1 the water is just the wave line, in concept 2 it is filled solid in the icon colour (replaces the Aqua orb there; not in Figma).
    --t is set to minus the page clock on every render, so the motion carries on instead of restarting when the chat re-renders */
 .tide { width: 20px; height: 20px; flex: none; display: block; color: var(--placeholder); }
 .tide .wave { animation: flow 1.6s linear var(--t, 0s) infinite; }
 @keyframes flow { to { transform: translateX(-10px); } }
+/* Concept 3 loader: a wave made of five dots that bob one after another (--d staggers them, --t keeps the motion going across re-renders) */
+.dots { width: 20px; height: 20px; flex: none; display: block; fill: var(--primary); }
+.dots circle { animation: bob 1.2s ease-in-out calc(var(--t, 0s) + var(--d, 0s)) infinite; }
+@keyframes bob { 0%, 100% { transform: translateY(3px); } 50% { transform: translateY(-3px); } }
+/* Concept 4 loader: two rows of four dots, the back row lighter and out of step with the front one */
+.dots.two circle { animation-name: bob2; animation-duration: 1.4s; }
+.dots.two .back { fill-opacity: .45; }
+@keyframes bob2 { 0%, 100% { transform: translateY(2px); } 50% { transform: translateY(-2px); } }
+/* Concept 5 loader: a double helix — two strands of five dots, half a turn apart; each dot grows as it passes in front and shrinks behind */
+.helix { width: 20px; height: 20px; flex: none; display: block; fill: var(--primary); }
+.helix circle { transform-box: fill-box; transform-origin: center; animation: helix 1.6s linear calc(var(--t, 0s) + var(--d, 0s)) infinite; }
+/* Concept 6 loader: a turning globe — dots cross a sphere, growing towards the middle and fading at the edges */
+.globe { width: 20px; height: 20px; flex: none; display: block; fill: var(--primary); }
+.globe .rim { fill: none; stroke: var(--primary); stroke-width: 1.2; }
+.globe .dot { transform-box: fill-box; transform-origin: center; animation: globe 2s linear calc(var(--t, 0s) + var(--d, 0s)) infinite; }
+.globe .dot.s { animation-name: globe-s; }
+@keyframes globe { 0% { transform: translateX(-7px) scale(.3); opacity: .2; } 25% { transform: translateX(-4.95px) scale(.9); opacity: .8; } 50% { transform: translateX(0) scale(1.25); opacity: 1; } 75% { transform: translateX(4.95px) scale(.9); opacity: .8; } 100% { transform: translateX(7px) scale(.3); opacity: .2; } }
+@keyframes globe-s { 0% { transform: translateX(-5px) scale(.3); opacity: .2; } 25% { transform: translateX(-3.5px) scale(.8); opacity: .8; } 50% { transform: translateX(0) scale(1.05); opacity: 1; } 75% { transform: translateX(3.5px) scale(.8); opacity: .8; } 100% { transform: translateX(5px) scale(.3); opacity: .2; } }
+/* Concept 7 loader: an atom */
+.atom { width: 20px; height: 20px; flex: none; display: block; fill: var(--primary); }
+.atom .e { transform-box: fill-box; transform-origin: center; animation: orbit 1.8s linear calc(var(--t, 0s) + var(--d, 0s)) infinite; }
+/* Concept 8 loader: a carousel — the same orbit, six dots, a slower turn */
+.atom.ring .e { animation-duration: 2.4s; }
+@keyframes orbit { 0%, 100% { transform: translate(7px, 0) scale(1); } 12.5% { transform: translate(4.95px, 1.77px) scale(1.27); } 25% { transform: translate(0, 2.5px) scale(1.38); } 37.5% { transform: translate(-4.95px, 1.77px) scale(1.27); } 50% { transform: translate(-7px, 0) scale(1); } 62.5% { transform: translate(-4.95px, -1.77px) scale(.73); } 75% { transform: translate(0, -2.5px) scale(.62); } 87.5% { transform: translate(4.95px, -1.77px) scale(.73); } }
+/* Concepts 9–11 loaders: whirlpools with depth. Dots circle on tilted rings of radius --r (larger in front, smaller behind);
+   9 stacks the rings into a funnel, 11 lays them out as one spiral arm; 10 draws the funnel as ring arcs running round */
+.vx { width: 20px; height: 20px; flex: none; display: block; fill: var(--primary); }
+.vx .o { transform-box: fill-box; transform-origin: center; animation: vorb 2s linear calc(var(--t, 0s) + var(--d, 0s)) infinite; }
+.vx ellipse { fill: none; stroke: var(--primary); stroke-width: 1.6; stroke-linecap: round; stroke-dasharray: 55 45; stroke-dashoffset: 100; animation: vdash 1.4s linear calc(var(--t, 0s) + var(--d, 0s)) infinite; }
+/* Concept 15: the whole ring also rocks from side to side */
+.vx .rock { transform-origin: 10px 10px; animation: rock 6s ease-in-out var(--t, 0s) infinite; }
+@keyframes rock { 0%, 100% { transform: rotate(-30deg); } 50% { transform: rotate(30deg); } }
+@keyframes vdash { to { stroke-dashoffset: 0; } }
+@keyframes vorb { 0%, 100% { transform: translate(var(--r), 0) scale(1); } 12.5% { transform: translate(calc(var(--r) * .707), calc(var(--r) * .25)) scale(1.25); } 25% { transform: translate(0, calc(var(--r) * .35)) scale(1.38); } 37.5% { transform: translate(calc(var(--r) * -.707), calc(var(--r) * .25)) scale(1.25); } 50% { transform: translate(calc(var(--r) * -1), 0) scale(1); } 62.5% { transform: translate(calc(var(--r) * -.707), calc(var(--r) * -.25)) scale(.75); } 75% { transform: translate(0, calc(var(--r) * -.35)) scale(.6); } 87.5% { transform: translate(calc(var(--r) * .707), calc(var(--r) * -.25)) scale(.75); } }
+@keyframes helix { 0%, 100% { transform: translateY(-3.6px) scale(1); } 25% { transform: translateY(0) scale(1.3); } 50% { transform: translateY(3.6px) scale(1); } 75% { transform: translateY(0) scale(.55); } }
 .enter { animation: rise .25s ease-out; }
 @keyframes rise { from { opacity: 0; transform: translateY(4px); } to { opacity: 1; transform: none; } }
 
@@ -176,7 +211,8 @@ p { margin: 0; }
 /* Concept tabs: a prototype bar above the stage */
 .tabs { position: fixed; inset: 0 0 auto 0; height: 44px; z-index: 6; background: var(--panel); color: var(--panel-ink); display: flex; align-items: center; justify-content: center; gap: 4px; font-size: 13px; line-height: 16px; }
 .tabs[hidden] { display: none; }
-.tabs > button { padding: 6px 14px; border-radius: 8px; }
+.tabs > button { padding: 6px 10px; min-width: 32px; text-align: center; border-radius: 8px; white-space: nowrap; flex: none; }
+.tabs-label { text-transform: uppercase; letter-spacing: .08em; font-size: 12px; opacity: .6; padding-inline: 8px 4px; flex: none; }
 .tabs > button:hover { background: rgba(255,255,255,.12); }
 .tabs button[aria-selected="true"] { background: var(--white); color: var(--panel); }
 body.has-tabs .viewport { top: 44px; }
@@ -192,7 +228,9 @@ body.has-tabs .viewport { top: 44px; }
   .btn .t { display: none; }
   .home-text br { display: none; }
 }
-@media (max-width: 700px) { .proto .tag, #replay { display: none; } .tabs { justify-content: flex-start; padding-left: 8px; } }
+@media (max-width: 1300px) { .proto .tag { display: none; } .tabs { justify-content: flex-start; padding-left: 8px; } }
+@media (max-width: 900px) { .tabs-label { display: none; } .tabs > button { padding: 6px 4px !important; min-width: 26px; } }
+@media (max-width: 1100px) { #replay { display: none; } .tabs > button { padding-inline: 8px; } .tabs { overflow-x: auto; scrollbar-width: none; padding-right: 130px; } .proto { background: var(--panel); padding-left: 8px; } }
 /* Concept 2: the group header is a plain line aligned with the message text, with the time 16px after the arrow;
    only the expanded list below it gets a background and border */
 .concept-2 .card, .concept-2 .card:hover { background: transparent; padding: 0; }
@@ -212,8 +250,23 @@ body.has-tabs .viewport { top: 44px; }
 </head>
 <body>
 <div class="tabs" id="tabs" role="tablist" aria-label="Concept">
-  <button role="tab" data-concept="1">Concept 1</button>
-  <button role="tab" data-concept="2">Concept 2</button>
+  <span class="tabs-label">Concept</span>
+  <button role="tab" data-concept="1">1</button>
+  <button role="tab" data-concept="2">2</button>
+  <button role="tab" data-concept="3">3</button>
+  <button role="tab" data-concept="4">4</button>
+  <button role="tab" data-concept="5">5</button>
+  <button role="tab" data-concept="6">6</button>
+  <button role="tab" data-concept="7">7</button>
+  <button role="tab" data-concept="8">8</button>
+  <button role="tab" data-concept="9">9</button>
+  <button role="tab" data-concept="10">10</button>
+  <button role="tab" data-concept="11">11</button>
+  <button role="tab" data-concept="12">12</button>
+  <button role="tab" data-concept="13">13</button>
+  <button role="tab" data-concept="14">14</button>
+  <button role="tab" data-concept="15">15</button>
+  <button role="tab" data-concept="16">16</button>
   <div class="proto" id="proto" role="group" aria-label="Prototype controls">
     <span class="tag">Prototype</span>
     <button id="prev" aria-label="Previous frame">‹</button>
@@ -379,8 +432,38 @@ const esc = s => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&
 const img = (name, cls = 'ico') => `<img class="${cls}" src="${ICONS[name]}" decoding="sync" alt="">`;
 const chev = (down = false) => `<span class="chev${down ? ' down' : ''}"><img src="data:image/svg+xml;base64,PHN2ZyBwcmVzZXJ2ZUFzcGVjdFJhdGlvPSJub25lIiBvdmVyZmxvdz0idmlzaWJsZSIgc3R5bGU9ImRpc3BsYXk6IGJsb2NrOyIgd2lkdGg9IjEyIiBoZWlnaHQ9IjEyIiB2aWV3Qm94PSIwIDAgMTIgMTIiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+CjxnIGlkPSJjaGV2cm9uLWRvd24tc29saWQtZnVsbCAxIj4KPHBhdGggaWQ9IlZlY3RvciIgZD0iTTUuNTc2MjUgOC44MjM3NUM1LjgxMDYyIDkuMDU4MTIgNi4xOTEyNSA5LjA1ODEyIDYuNDI1NjMgOC44MjM3NUwxMC4wMjU2IDUuMjIzNzVDMTAuMjYgNC45ODkzNyAxMC4yNiA0LjYwODc1IDEwLjAyNTYgNC4zNzQzN0M5Ljc5MTI1IDQuMTQgOS40MTA2MiA0LjE0IDkuMTc2MjUgNC4zNzQzN0w2IDcuNTUwNjJMMi44MjM3NSA0LjM3NjI1QzIuNTg5MzggNC4xNDE4NyAyLjIwODc1IDQuMTQxODcgMS45NzQzOCA0LjM3NjI1QzEuNzQgNC42MTA2MiAxLjc0IDQuOTkxMjUgMS45NzQzOCA1LjIyNTYyTDUuNTc0MzcgOC44MjU2Mkw1LjU3NjI1IDguODIzNzVaIiBmaWxsPSIjNTA2MDdFIi8+CjwvZz4KPC9zdmc+Cg==" width="12" height="12" decoding="sync" alt=""></span>`;
 const label = (t, work = false, type = false) => `<p class="text-sm nowrap${work ? ' working' : ''}${type ? ' type' : ''}">${esc(t)}</p>`;
-const loader = () => `<svg class="tide" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working"><clipPath id="tideClip"><circle cx="10" cy="10" r="7.6"/></clipPath><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/><g clip-path="url(#tideClip)"><path class="wave" d="M0 10.5q2.5-2.4 5 0t5 0 5 0 5 0 5 0 5 0V30H0Z" fill="currentColor" fill-opacity=".22" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"/></g></svg>`;
-let timer = 0, typers = [];
+const DOT_X = [2.5, 6.25, 10, 13.75, 17.5];
+const dotLoader = () => `<svg class="dots" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working">${DOT_X.map((x, i) => `<circle cx="${x}" cy="10" r="1.4" style="--d:${-i * 0.15}s"/>`).join('')}</svg>`;
+const ROW_X = [3, 7.67, 12.33, 17], ROW_D = [0, -1.2, -1, -0.8];
+const rowLoader = () => `<svg class="dots two" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working">${ROW_X.map((x, i) => `<circle cx="${x}" cy="7" r="1.3" style="--d:${ROW_D[i]}s"/>`).join('')}${ROW_X.map((x, i) => `<circle class="back" cx="${x}" cy="13" r="1.3" style="--d:${ROW_D[(i + 1) % 4] + (i < 2 ? 0.9 : -0.5)}s"/>`).join('')}</svg>`;
+// Concept 6 loader: three rows of dots sweep across a sphere, largest and darkest at the front
+const GLOBE_ROWS = [[5.6, 1.2, 0, 's'], [10, 1.3, -0.33, ''], [14.4, 1.2, 0, 's']];
+const globeLoader = () => `<svg class="globe" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working"><circle class="rim" cx="10" cy="10" r="8.6"/>${GLOBE_ROWS.map(([y, r, off, k]) => [0, 1, 2].map(i => `<circle class="dot ${k}" cx="10" cy="${y}" r="${r}" style="--d:${(off - i * 2 / 3).toFixed(2)}s"/>`).join('')).join('')}</svg>`;
+// Concept 7 loader: an atom — two dots on tilted orbits around a core, larger in front and smaller behind
+const atomLoader = () => `<svg class="atom" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working"><circle cx="10" cy="10" r="2.2"/><g transform="rotate(-35 10 10)"><circle class="e" cx="10" cy="10" r="1.5"/></g><g transform="rotate(35 10 10)"><circle class="e" cx="10" cy="10" r="1.5" style="--d:-0.9s"/></g></svg>`;
+// Concept 8 loader: a carousel — six dots circling a tilted ring, larger in front and smaller behind
+const carouselLoader = () => `<svg class="atom ring" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working">${[0, 1, 2, 3, 4, 5].map(i => `<circle class="e" cx="10" cy="10" r="1.6" style="--d:${(-i * 0.4).toFixed(1)}s"/>`).join('')}</svg>`;
+// Concepts 9–11 loaders (see ".vx" styles): dot funnel, ring funnel, dot whirlpool
+const vx = body => `<svg class="vx" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working">${body}</svg>`;
+const orbDot = (cy, r, size, d, dur) => `<circle class="o" cx="10" cy="${cy}" r="${size}" style="--r:${r}px;--d:${d.toFixed(2)}s${dur ? `;animation-duration:${dur}s` : ''}"/>`;
+const FUNNEL_DOTS = [[4, 7.6, 1.4], [7.4, 5.8, 1.25], [10.6, 4.1, 1.1], [13.6, 2.5, 0.95]];
+const dotFunnelLoader = () => vx(FUNNEL_DOTS.map(([cy, r, size], i) => orbDot(cy, r, size, -i * 0.25) + orbDot(cy, r, size, -i * 0.25 - 1)).join('') + orbDot(16.6, 1, 0.8, -1));
+const FUNNEL_RINGS = [[4, 8, 2.4], [8, 6, 1.9], [11.6, 4.2, 1.4], [14.7, 2.6, 1], [17.3, 1.2, 0.6]];
+const funnelLoader = () => vx(FUNNEL_RINGS.map(([cy, rx, ry], i) => `<ellipse pathLength="100" cx="10" cy="${cy}" rx="${rx}" ry="${ry}" style="--d:${(-i * 0.25).toFixed(2)}s"/>`).join(''));
+const dotWhirlLoader = () => vx([0, 1, 2, 3, 4, 5, 6, 7].map(i => orbDot(10, +(1.4 + i * 0.9).toFixed(1), +(0.7 + i * 0.1).toFixed(1), -i * 0.18)).join(''));
+// Concept 12 loader: a three-dot carousel; concept 13: an atom with three crossed orbits (both one turn per 1.8s)
+const threeDotLoader = () => vx([0, 1, 2].map(i => orbDot(10, 6.8, 2, -i * 0.6, 1.8)).join(''));
+const threeOrbitLoader = () => vx(`<circle cx="10" cy="10" r="2"/>` + [0, 60, 120].map((a, i) => `<g transform="rotate(${a} 10 10)">${orbDot(10, 7.4, 1.4, -i * 0.6, 1.8)}</g>`).join(''));
+// Concept 14 loader: crossed carousels — two tilted rings in an X, three dots each, a slower turn (3.2s)
+const crossedLoader = () => vx([[-38, 0], [38, -0.53]].map(([a, off]) => `<g transform="rotate(${a} 10 10)">${[0, 1, 2].map(i => orbDot(10, 7.4, 1.4, off - i * 3.2 / 3, 3.2)).join('')}</g>`).join(''));
+// Concept 15 loader: rocking halo — five fine dots on one slow ring (4s a turn) while the ring itself tilts side to side
+const rockingLoader = () => vx(`<g class="rock">${[0, 1, 2, 3, 4].map(i => orbDot(10, 7.6, 1.2, -i * 0.8, 4)).join('')}</g>`);
+// Concept 16 loader: three-dot rocking — the rocking halo with three larger dots
+const rockingThreeLoader = () => vx(`<g class="rock">${[0, 1, 2].map(i => orbDot(10, 7.4, 1.5, -i * 4 / 3, 4)).join('')}</g>`);
+const HELIX_X = [3, 6.5, 10, 13.5, 17];
+const helixLoader = () => `<svg class="helix" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working">${HELIX_X.map((x, i) => [0, 0.8].map(half => `<circle cx="${x}" cy="10" r="1.4" style="--d:${-(i * 0.2 + half).toFixed(1)}s"/>`).join('')).join('')}</svg>`;
+const loader = () => concept === 16 ? rockingThreeLoader() : concept === 15 ? rockingLoader() : concept === 14 ? crossedLoader() : concept === 13 ? threeOrbitLoader() : concept === 12 ? threeDotLoader() : concept === 11 ? dotWhirlLoader() : concept === 10 ? funnelLoader() : concept === 9 ? dotFunnelLoader() : concept === 8 ? carouselLoader() : concept === 7 ? atomLoader() : concept === 6 ? globeLoader() : concept === 5 ? helixLoader() : concept === 4 ? rowLoader() : concept === 3 ? dotLoader() : `<svg class="tide" viewBox="0 0 20 20" style="--t:-${Math.round(performance.now())}ms" role="img" aria-label="Working"><clipPath id="tideClip"><circle cx="10" cy="10" r="7.6"/></clipPath><circle cx="10" cy="10" r="8.25" fill="none" stroke="currentColor" stroke-width="1.5"/><g clip-path="url(#tideClip)"><path class="wave" d="M0 10.5q2.5-2.4 5 0t5 0 5 0 5 0 5 0 5 0V30H0Z" ${concept === 1 ? 'fill="none" stroke="currentColor" stroke-width="1.5" stroke-linejoin="round"' : 'fill="currentColor"'}/></g></svg>`;
+let timer = 0, typers = [], concept = 1;
 const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 // Typewriter: newly streamed text (a step's label, or an answer) is typed out; long answers are capped so they finish inside the step
@@ -422,7 +505,7 @@ function render(enter = false, keepScroll = false) {
   stage.classList.toggle('is-welcome', S.n === 0);
   document.getElementById('count').textContent = `${String(currentFrame()).padStart(2, '0')} / ${LAST}`;
   if (S.n === 0) { typers.forEach(clearInterval); typers = []; return; }   // step 0 = the welcome screen (frame 00)
-  const at = chat.scrollTop;
+  const at = chat.scrollTop, atBottom = chat.scrollTop + chat.clientHeight >= chat.scrollHeight - 2;
   const f = FRAMES[S.n];
   let h = `<div class="user-wrap"><div class="user">${esc(S.user)}</div></div>`;
   if (f.top === 'live') h += `<div class="rows${enter ? ' enter' : ''}">${row({ reason: true }, 0, { live: true, tasks: 1 }, enter)}</div>`;
@@ -442,7 +525,7 @@ function render(enter = false, keepScroll = false) {
   h += `<div class="aqua-line"><div class="in">${loader()}<p class="text-sm nowrap${enter ? ' enter' : ''}">${STATUS[Math.min(S.n, STATUS.length - 1)]}</p></div></div>`;
   chat.innerHTML = h;
   typeIn();
-  chat.scrollTop = keepScroll ? at : chat.scrollHeight;   // frames 09+ overflow and are bottom-anchored
+  chat.scrollTop = keepScroll === 'stick' ? (atBottom ? chat.scrollHeight : at) : keepScroll ? at : chat.scrollHeight;   // frames 09+ overflow and are bottom-anchored
 }
 
 // Which step the current state corresponds to
@@ -495,20 +578,22 @@ prompt.addEventListener('keydown', e => { if (e.key === 'Enter' && !e.shiftKey) 
 addEventListener('keydown', e => { if (e.target === prompt) return; if (e.key === 'ArrowRight') step(1); if (e.key === 'ArrowLeft') step(-1); });
 
 const stage = document.getElementById('stage');
-document.fonts.ready.then(() => { chat.scrollTop = chat.scrollHeight; });   // re-anchor once Poppins has replaced the fallback
+document.fonts.ready.then(() => { chat.scrollTop = chat.scrollHeight; });
+addEventListener('resize', () => { if (S.n > 0 && S.n <= STREAM_END && !S.cardOpen && !S.topCardOpen) chat.scrollTop = chat.scrollHeight; });   // keep the loader in view when the window reflows the text   // re-anchor once Poppins has replaced the fallback
 
 // ?frame=N opens a specific step statically; ?ui=0 hides the prototype controls
-// ?concept=2 opens the second concept
+// ?concept=N opens that concept
 const q = new URLSearchParams(location.search);
 const tabs = document.getElementById('tabs');
 function setConcept(c) {
+  concept = c;   // 1: Figma design · 2: plain group header · 3–16: design of concept 1 with another loader (five-dot wave, two-row dots, double helix, globe, atom, carousel, dot funnel, ring funnel, dot whirlpool, three-dot carousel, three-orbit atom, crossed carousels, rocking halo, three-dot rocking)
   document.body.classList.toggle('concept-2', c === 2);
   tabs.querySelectorAll('[data-concept]').forEach(b => b.setAttribute('aria-selected', +b.dataset.concept === c));
 }
-tabs.addEventListener('click', e => { const b = e.target.closest('[data-concept]'); if (b) setConcept(+b.dataset.concept); });   // switching keeps the current step
+tabs.addEventListener('click', e => { const b = e.target.closest('[data-concept]'); if (b) { setConcept(+b.dataset.concept); render(false, 'stick'); } });   // switching keeps the current step
 if (q.get('ui') === '0') document.getElementById('proto').hidden = tabs.hidden = true;
 else document.body.classList.add('has-tabs');
-setConcept(q.get('concept') === '2' ? 2 : 1);
+setConcept(+q.get('concept') >= 2 && +q.get('concept') <= tabs.querySelectorAll('[data-concept]').length ? +q.get('concept') : 1);
 goto(q.has('frame') ? +q.get('frame') : 0);   // opens on the welcome screen; the send button starts the stream
 </script>
 </body>
